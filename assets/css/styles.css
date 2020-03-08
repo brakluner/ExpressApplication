@@ -4,6 +4,10 @@ html, body {
   padding: 0;
 }
 
+span {
+  margin: 0 3px 0 3px;
+}
+
 .save-note {
   display: none;
 }

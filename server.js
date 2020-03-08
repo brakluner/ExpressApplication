@@ -49,6 +49,10 @@ console.log(NotesData);
     res.sendFile(path.join(__dirname, 'assets/js/index.js'));
 });
 
+app.get('/styles.css', function (req, res) {
+    res.sendFile(path.join(__dirname, 'assets/css/styles.css'));
+});
+
 app.get("/api/Note", function(req, res) {
     res.json(NotesData);
   });
