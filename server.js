@@ -54,6 +54,8 @@ app.post("/api/Note", function(req, res) {
     
     // We then display the JSON to the users
     res.json(newNote);
+    let data = JSON.stringify(NotesData);
+    fs.writeFileSync('db.json', data);
   });
 
   app.delete('/delete/:Note', function(req, res) {
