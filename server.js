@@ -30,7 +30,7 @@ var NotesData = require("./db.json")
 console.log(Notes);
 console.log(NotesData);
 
-//   fs.readFile(__dirname + "/../db/db.json", function(err, data) {
+//   fs.readFile(__dirname + "db.json", function(err, data) {
 //     if (err) throw err;
     
 //     res.writeHead(200, { "Content-Type": "json" });
@@ -61,14 +61,26 @@ app.post("/api/Note", function(req, res) {
   
     // We then add the json the user sent to the character array
     NotesData.push(newNote);
-  
+    console.log(NotesData)
+    
     // We then display the JSON to the users
     res.json(newNote);
+    console.log(res)
   });
 
-app.delete('/api/Note', function (req, res) {
-  res.send('DELETE request to homepage')
-})
+  app.delete('/delete/:Note', function(req, res) {
+    var id = req.param("Note");
+        MyModel.remove({
+            _id: id 
+        }, function(err){
+            if (err) {
+                console.log(err)
+            }
+            else {
+               return res.send("Removed");
+            }
+        });
+    });
   
     
     

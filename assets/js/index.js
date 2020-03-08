@@ -8,7 +8,7 @@ var $noteList = $(".list-container .list-group");
 var activeNote = {};
 
 // A function for getting all notes from the db
-var getNotes = function() {
+var getNotes = function(NotesData) {
   return $.ajax({
     url: "/api/Note",
     method: "GET"
@@ -16,10 +16,10 @@ var getNotes = function() {
 };
 
 // A function for saving a note to the db
-var saveNote = function(Notes) {
+var saveNote = function(NotesData) {
   return $.ajax({
     url: "/api/Note",
-    data: Notes,
+    data: NotesData,
     method: "POST"
   });
 };
@@ -39,8 +39,8 @@ var renderActiveNote = function() {
   if (activeNote.id) {
     $noteTitle.attr("readonly", true);
     $noteText.attr("readonly", true);
-    $noteTitle.val(activeNote.title);
-    $noteText.val(activeNote.text);
+    $noteTitle.val(activeNote.NoteTitle);
+    $noteText.val(activeNote.NoteText);
   } else {
     $noteTitle.attr("readonly", false);
     $noteText.attr("readonly", false);
@@ -105,16 +105,16 @@ var handleRenderSaveBtn = function() {
 };
 
 // Render's the list of note titles
-var renderNoteList = function(Notes) {
+var renderNoteList = function(NotesData) {
   $noteList.empty();
 
   var noteListItems = [];
 
-  for (var i = 0; i < Notes.length; i++) {
-    var note = Notes[i];
+  for (var i = 0; i < NotesData.length; i++) {
+    var note = NotesData[i];
 
     var $li = $("<li class='list-group-item'>").data(note);
-    var $span = $("<span>").text(note.title);
+    var $span = $("<span>").text(note.NoteTitle);
     var $delBtn = $(
       "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
     );
