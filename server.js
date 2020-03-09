@@ -40,17 +40,32 @@ app.get('/db.json', function (req, res) {
 
 
 app.get("/api/Note", function(req, res) {
-    res.json(NotesData);
+    return res.json(NotesData);
   });
+
+app.get("/api/Note/:Id", function(req, res) {
+  var chosen = req.params.Id;
+
+  console.log(chosen);
+  
+
+  for (var i = 0; i < NotesData.length; i++) {
+    if (chosen === NotesData[i].id) {
+      return res.json(NotesData[i]);
+    }console.log(NotesData[i].id)
+  }
+  
+});
 
 app.post("/api/Note", function(req, res) {
     
     var newNote = req.body;
-    var newId = NotesData[NotesData.length-1].id+1;
+    var newId = parseInt(NotesData[NotesData.length-1].id)+1;
+    var stringId = newId.toString();
       NotesData.push({
          NoteText: req.body.NoteText,
          NoteTitle: req.body.NoteTitle,
-         id: newId,
+         id: stringId
       });
       
 
@@ -66,32 +81,10 @@ app.post("/api/Note", function(req, res) {
     
 });
 
-  app.put('/api/Note/:id', function(req, res) {
-      var newId = req.body.id;
-      var newNewId = newId + 1;
-
-      console.log(newId)
-      console.log(newNewId)
-      NotesData.push(newNewId);
-
-      let data = JSON.stringify(NotesData);
-      fs.writeFileSync('db.json', data);
-  });
-
-
-  app.delete('api/Note/delete?:id', function(req, res) {
-    var id = req.param("Note");
-        MyModel.remove({
-            _id: id 
-        }, function(err){
-            if (err) {
-                console.log(err)
-            }
-            else {
-               return res.send("Removed");
-            }
-        });
-    });
+  app.delete('/api/Note/:Id', function(req, res) {
+            res.send("Removed");
+            });
+    
   
     
     

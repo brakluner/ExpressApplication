@@ -16,6 +16,14 @@ var getNotes = function(NotesData) {
   });
 };
 
+var getNoteId = function(NotesData) {
+  return $.ajax({
+    url: "/api/Note/:Id",
+    data: NotesData,
+    method: "GET"
+  });
+};
+
 // A function for saving a note to the db
 var saveNote = function(NotesData) {
   return $.ajax({
@@ -33,11 +41,12 @@ var saveNote = function(NotesData) {
 // }
 
 // A function for deleting a note from the db
-var deleteNote = function(id) {
+var deleteNote = function(note) {
   return $.ajax({
-    url: "api/Note/" + id,
+    url: "/api/Note/" + note.id,
     method: "DELETE"
-  });
+  },console.log(note.id));
+  
 };
 
 // If there is an activeNote, display it, otherwise render empty inputs
@@ -84,12 +93,13 @@ var handleNoteDelete = function() {
     .data();
 
     console.log(note)
+  
 
   if (activeNote.id === note.id) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(function() {
+  deleteNote(note).then(function() {
     getAndRenderNotes();
     renderActiveNote();
   });
