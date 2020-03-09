@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 
+
 var app = express();
 var PORT = 4400;
 
@@ -45,20 +46,40 @@ app.get("/api/Note", function(req, res) {
 app.post("/api/Note", function(req, res) {
     
     var newNote = req.body;
+    var newId = NotesData[NotesData.length-1].id+1;
+      NotesData.push({
+         NoteText: req.body.NoteText,
+         NoteTitle: req.body.NoteTitle,
+         id: newId,
+      });
+      
 
-    console.log(newNote);
   
     // We then add the json the user sent to the character array
-    NotesData.push(newNote);
     console.log(NotesData)
     
     // We then display the JSON to the users
     res.json(newNote);
+
     let data = JSON.stringify(NotesData);
     fs.writeFileSync('db.json', data);
+    
+});
+
+  app.put('/api/Note/:id', function(req, res) {
+      var newId = req.body.id;
+      var newNewId = newId + 1;
+
+      console.log(newId)
+      console.log(newNewId)
+      NotesData.push(newNewId);
+
+      let data = JSON.stringify(NotesData);
+      fs.writeFileSync('db.json', data);
   });
 
-  app.delete('/delete/:Note', function(req, res) {
+
+  app.delete('api/Note/delete?:id', function(req, res) {
     var id = req.param("Note");
         MyModel.remove({
             _id: id 
