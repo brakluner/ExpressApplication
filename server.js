@@ -82,11 +82,26 @@ app.post("/api/Note", function(req, res) {
 });
 
   app.delete('/api/Note/:Id', function(req, res) {
-            res.send("Removed");
-            });
+    
+    var chosen = req.params.Id;
+
+    console.log(chosen);
+
+    for (var i = 0; i < NotesData.length; i++) {
+        if (chosen === NotesData[i].id) {
+          return res.json(NotesData[i]);
+        }//console.log(NotesData[i])
+      
+      
+      let data = JSON.stringify(NotesData[i]);
+      fs.writeFileSync('db.json', data);
+      console.log(data)
+    
+      
+            };
     
   
-    
+        })
     
 
   
