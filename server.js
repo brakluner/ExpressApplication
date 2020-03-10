@@ -3,6 +3,7 @@ var path = require("path");
 var fs = require("fs");
 
 
+
 var app = express();
 var PORT = 4400;
 
@@ -11,10 +12,10 @@ app.use(express.json());
 app.use(express.static(__dirname + '/public')); 
 
 
-let rawdata = fs.readFileSync('db.json');
-let Notes = JSON.parse(rawdata);
+//let rawdata = fs.readFileSync('db.json');
+//let Notes = JSON.parse(rawdata);
 var NotesData = require("./db.json")
-console.log(Notes);
+//console.log(Notes);
 console.log(NotesData);
 
 
@@ -43,8 +44,8 @@ app.get("/api/Note", function(req, res) {
     return res.json(NotesData);
   });
 
-app.get("/api/Note/:Id", function(req, res) {
-  var chosen = req.params.Id;
+app.get("/api/Note/:id", function(req, res) {
+  let chosen = req.params.id;
 
   console.log(chosen);
   
@@ -59,9 +60,9 @@ app.get("/api/Note/:Id", function(req, res) {
 
 app.post("/api/Note", function(req, res) {
     
-    var newNote = req.body;
-    var newId = parseInt(NotesData[NotesData.length-1].id)+1;
-    var stringId = newId.toString();
+    let newNote = req.body;
+    let newId = parseInt(NotesData[NotesData.length-1].id)+1;
+    let stringId = newId.toString();
       NotesData.push({
          NoteText: req.body.NoteText,
          NoteTitle: req.body.NoteTitle,
@@ -81,21 +82,20 @@ app.post("/api/Note", function(req, res) {
     
 });
 
-  app.delete('/api/Note/:Id', function(req, res) {
+  app.delete('/api/Note/:id', function(req, res) {
     
-    var chosen = req.params.Id;
+    let chosen = req.params.id;
 
     console.log(chosen);
 
     for (var i = 0; i < NotesData.length; i++) {
         if (chosen === NotesData[i].id) {
           return res.json(NotesData[i]);
-        }//console.log(NotesData[i])
-      
+        }console.log(NotesData[i])
       
       let data = JSON.stringify(NotesData[i]);
-      fs.writeFileSync('db.json', data);
       console.log(data)
+      fs.writeFileSync('db.json', data);
     
       
             };
