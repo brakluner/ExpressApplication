@@ -1,6 +1,7 @@
 var express = require("express");
 var path = require("path");
 var fs = require("fs");
+//const fsPromises = require('fs').promises;
 
 
 
@@ -84,19 +85,22 @@ app.post("/api/Note", function(req, res) {
 
   app.delete('/api/Note/:id', function(req, res) {
 
-    let rooot = req.url
+    let Iid = req.params.id - 1
 
-    console.log(rooot);
+    console.log(res);
+    console.log(Iid);
 
-    fs.unlink(rooot, (err) => {
-        if (err) throw err;
-      });
+    NotesData.splice(Iid, 1);
+console.log(NotesData); 
     res.send("wallah");
+
+    let data = JSON.stringify(NotesData);
+    fs.writeFileSync('db.json', data);
 
 
     //let chosen = req.params.id;
 
-    // console.log(res);
+    
 
     // for (var i = 0; i < NotesData.length; i++) {
     //     if (chosen === NotesData[i].id) {
