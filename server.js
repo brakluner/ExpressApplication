@@ -83,25 +83,40 @@ app.post("/api/Note", function(req, res) {
 });
 
   app.delete('/api/Note/:id', function(req, res) {
-    
-    let chosen = req.params.id;
 
-    console.log(chosen);
+    let rooot = req.url
 
-    for (var i = 0; i < NotesData.length; i++) {
-        if (chosen === NotesData[i].id) {
-          return res.json(NotesData[i]);
-        }console.log(NotesData[i])
+    console.log(rooot);
+
+    fs.unlink(rooot, (err) => {
+        if (err) throw err;
+      });
+    res.send("wallah");
+
+
+    //let chosen = req.params.id;
+
+    // console.log(res);
+
+    // for (var i = 0; i < NotesData.length; i++) {
+    //     if (chosen === NotesData[i].id) {
+    //       return res.json();
+    //     }console.log(res)
       
-      let data = JSON.stringify(NotesData[i]);
-      console.log(data)
-      fs.writeFileSync('db.json', data);
-    
+    //   let data = JSON.stringify(NotesData[i]);
+    //   console.log(data)
+    //   fs.writeFileSync("db.json", data, {  
+    //     encoding: "utf8",  
+    //     mode: 666,  
+    //     flag: "w"
+          
+    //   });
+      //console.log(data)
       
-            };
+        //     };
     
   
-        })
+         })
     
 
   
