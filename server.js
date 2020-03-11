@@ -85,14 +85,24 @@ app.post("/api/Note", function(req, res) {
 
   app.delete('/api/Note/:id', function(req, res) {
 
-    let Iid = req.params.id - 1
+    let Iid = req.params.id
 
-    console.log(res);
+    if (Iid <= NotesData.length) {
+      res.json(NotesData.splice(Iid-1,1))
+      //this.NotesData.splice(Iid, 1);
+    }
+
+    for (var i = 0; i < NotesData.length; i++) {
+
+      NotesData[i].id = i+1;
+    
+
+    //console.log(res);
     console.log(Iid);
-
-    NotesData.splice(Iid, 1);
-console.log(NotesData); 
-    res.send("wallah");
+    }
+//     NotesData.splice(Iid, 1);
+// console.log(NotesData); 
+    //  res.send("wallah");
 
     let data = JSON.stringify(NotesData);
     fs.writeFileSync('db.json', data);
@@ -123,7 +133,7 @@ console.log(NotesData);
          })
     
 
-  
+        ;
 
   
   app.listen(PORT, function() {
